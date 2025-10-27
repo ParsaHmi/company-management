@@ -1,0 +1,26 @@
+# Laravel
+/src/.env
+/src/storage/
+/src/bootstrap/cache/
+/src/public/hot
+/src/public/storage
+
+# Docker
+*.log
+.docker
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Screenshots
+*.png
+*.jpg
+*.jpeg
+

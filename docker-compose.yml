@@ -1,0 +1,49 @@
+version: '3.9'
+services:
+  app:
+    build: .
+    container_name: company_app
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - company_net
+
+  web:
+    image: nginx:alpine
+    container_name: company_web
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - company_net
+
+  db:
+    image: mysql:8.0
+    container_name: company_db
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - company_net
+
+  redis:
+    image: redis:alpine
+    container_name: company_redis
+    networks:
+      - company_net
+
+networks:
+  company_net:
+
+volumes:
+  db_data:
